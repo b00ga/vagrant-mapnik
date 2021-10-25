@@ -1,2 +1,9 @@
 ---
 mapnik_build_tools: make,gcc,g++
+mapnik_build_deps: >
+    libfreetype-dev,libharfbuzz-dev,libxml2-dev,
+    libjpeg-turbo8-dev,libtiff-dev,libwebp-dev,
+    libcairo2-dev,libproj-dev,libgdal-dev,libpq-dev,
+    qtbase5-dev
+boost_pkg: libboost-all-dev
+cmake_opts: -DPostgreSQL_TYPE_INCLUDE_DIR=/usr/include

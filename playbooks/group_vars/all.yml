@@ -10,6 +10,16 @@ cmake_source: package
 cmake_upstream_baseurl: https://cmake.org/files/LatestRelease/
 cmake_upstream_json: cmake-latest-files-v1.json 
 
+# Options to pass to cmake for mapnik compile
+cmake_opts: ''
+
+boost_pkg: boost
+# Recognized values for boost_source are:
+# * package: Use package manager to install boost
+# * upstream: Build upstream boost libraries needed by mapnik
+# Default is 'package'
+boost_source: package
+
 # Packages for mapnik required build tools
 mapnik_build_tools: ''
 # Packages for mapnik required dependencies
