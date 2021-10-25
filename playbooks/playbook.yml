@@ -23,10 +23,106 @@
           - tasks/os_{{ ansible_os_family }}.yml
           - tasks/extra_default.yml
 
+  - name: Save information about host to controller
+    local_action:
+      module: ansible.builtin.lineinfile
+      path: info.csv
+      line: '{{ ansible_hostname }},{{ ansible_distribution }},{{ ansible_distribution_version }}	,{{ ansible_distribution_release }},{{ ansible_kernel }},{{ ansible_kernel_version }},{{ ansible_os_family }},{{ ansible_pkg_mgr }},{{ ansible_python_version }}'
+      create: yes
+      mode: '0644'
+
+  - name: Update apt package cache
+    become: yes
+    apt:
+      update_cache: yes
+    when: ansible_os_family == 'Debian'
+
   - name: Install git
     become: yes
     package:
       name: git
       state: present
 
+  - name: Clone mapnik repo
+    git:
+      repo: https://github.com/mapnik/mapnik.git
+      dest: '{{ ansible_user_dir }}/mapnik'
+      version: master
 
+  - name: Create cmake build directory
+    file:
+      path: '{{ ansible_user_dir }}/mapnik/build'
+      state: directory
+
+  - name: Install cmake package
+    become: yes
+    package:
+      name: '{{ cmake_pkg }}'
+      state: present
+    when: cmake_source == 'package'
+
+  - name: Install cmake binary distribution
+    block:
+      - name: Fetch information on latest cmake version
+        uri:
+          url: '{{ (cmake_upstream_baseurl,cmake_upstream_json) | path_join }}'
+          body_format: json
+        register: cmake_upstream_versions
+
+      - name: Determine the archive name of the latest Linux x86_64 binaries
+        # Find the linux, x86_64 archive and return the archive name
+        set_fact:
+          cmake_upstream_tarball: "{{ cmake_upstream_versions.json | json_query(\"files[? contains(os,'linux') && contains(architecture,'x86_64') && class=='archive'].name\") | first }}"
+
+      - name: Download the latest cmake archive
+        get_url:
+          url: '{{ (cmake_upstream_baseurl,cmake_upstream_tarball) | path_join }}'
+          dest: '{{ (ansible_user_dir,cmake_upstream_tarball) | path_join }}'
+
+      - name: Extract the downloaded archive
+        become: yes
+        unarchive:
+          src: '{{ (ansible_user_dir,cmake_upstream_tarball) | path_join }}'
+          dest: /opt
+          remote_src: yes
+
+      - name: Symlink /opt/cmake to installed version
+        become: yes
+        file:
+          src: '/opt/{{ cmake_upstream_tarball | splitext | first | splitext | first }}'
+          dest: /opt/cmake
+          state: link
+
+    # End block
+    when: cmake_source == 'upstream'
+
+  - name: Get cmake version
+    shell: '{{ cmake_cmd }} --version | grep version'
+    register: cmake_version
+
+  - name: Save build tools information about host to controller
+    local_action:
+      module: ansible.builtin.lineinfile
+      path: cmakeinfo.csv
+      line: '{{ ansible_hostname }},{{ ansible_distribution }} {{ ansible_distribution_version }}	,{{ cmake_version.stdout }}'
+      create: yes
+      mode: '0644'
+
+  - name: Install required build tools
+    become: yes
+    package:
+      name: '{{ mapnik_build_tools }}'
+      state: present
+    when: mapnik_build_tools != ''
+
+  - name: Install required build dependencies
+    become: yes
+    package:
+      name: '{{ mapnik_build_deps }}'
+      state: present
+    when: mapnik_build_deps != ''
+
+  - name: Configure source with cmake
+    command: '{{ cmake_cmd }} ..'
+    args:
+      chdir: '{{ ansible_user_dir }}/mapnik/build'

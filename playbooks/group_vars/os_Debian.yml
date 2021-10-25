@@ -1,0 +1,2 @@
+---
+mapnik_build_tools: make,gcc,g++

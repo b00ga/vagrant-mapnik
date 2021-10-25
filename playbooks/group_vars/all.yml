@@ -1,0 +1,16 @@
+---
+cmake_pkg: cmake
+cmake_cmd: cmake
+# Recognized values for cmake_source are:
+# * package: Use package manager to install cmake
+# * upstream: Use binary archive from upstream CMake downloads
+# Default is 'package'
+cmake_source: package
+
+cmake_upstream_baseurl: https://cmake.org/files/LatestRelease/
+cmake_upstream_json: cmake-latest-files-v1.json 
+
+# Packages for mapnik required build tools
+mapnik_build_tools: ''
+# Packages for mapnik required dependencies
+mapnik_build_deps: ''
