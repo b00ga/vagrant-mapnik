@@ -1,4 +1,10 @@
 ---
+# Required versions of things:
+# CMake: 3.15
+# Boost 1.73
+# Proj 7.2.0
+
+
 cmake_pkg: cmake
 cmake_cmd: cmake
 # Recognized values for cmake_source are:
@@ -13,7 +19,7 @@ cmake_upstream_json: cmake-latest-files-v1.json
 # Options to pass to cmake for mapnik compile
 cmake_opts: ''
 
-boost_pkg: boost
+boost_pkgs: boost
 # Recognized values for boost_source are:
 # * package: Use package manager to install boost
 # * upstream: Build upstream boost libraries needed by mapnik

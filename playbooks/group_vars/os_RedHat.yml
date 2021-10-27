@@ -5,4 +5,4 @@ mapnik_build_deps: >
     libjpeg-turbo-devel,libtiff-devel,libwebp-devel,
     cairo-devel,proj-devel,gdal-devel,libpq-devel,
     harfbuzz-devel,sqlite-devel,qt5-qtbase-devel
-boost_pkg: boost-devel
+boost_pkgs: boost-devel

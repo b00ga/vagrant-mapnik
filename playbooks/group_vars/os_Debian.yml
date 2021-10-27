@@ -5,5 +5,5 @@ mapnik_build_deps: >
     libjpeg-turbo8-dev,libtiff-dev,libwebp-dev,
     libcairo2-dev,libproj-dev,libgdal-dev,libpq-dev,
     qtbase5-dev
-boost_pkg: libboost-all-dev
+boost_pkgs: libboost-all-dev
 cmake_opts: -DPostgreSQL_TYPE_INCLUDE_DIR=/usr/include

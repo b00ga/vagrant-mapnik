@@ -118,7 +118,7 @@
   - name: Install boost packages
     become: yes
     package:
-      name: '{{ boost_pkg }}'
+      name: '{{ boost_pkgs }}'
       state: present
     when: boost_source == 'package'
 
