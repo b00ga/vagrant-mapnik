@@ -4,6 +4,8 @@
 # Boost 1.73
 # Proj 7.2.0
 
+# Used when building boost (if needed) and mapnik-python
+python_exec: /usr/bin/python3
 
 cmake_pkg: cmake
 cmake_cmd: cmake
@@ -16,17 +18,29 @@ cmake_source: package
 cmake_upstream_baseurl: https://cmake.org/files/LatestRelease/
 cmake_upstream_json: cmake-latest-files-v1.json 
 
-# Options to pass to cmake for mapnik compile
-cmake_opts: ''
-
 boost_pkgs: boost
 # Recognized values for boost_source are:
 # * package: Use package manager to install boost
 # * upstream: Build upstream boost libraries needed by mapnik
 # Default is 'package'
 boost_source: package
+# For boost_source==upstream, what version to download and build
+boost_build_version: 1.77.0
+boost_build_version_u: "{{ boost_build_version | replace('.','_') }}"
+# Options to provide to b2 to build boost
+boost_build_opts: --with-iostreams --with-filesystem --with-regex --with-python --with-thread --with-program_options --with-system --with-coroutine
+# Additional packages required to build boost
+boost_build_deps:
+# Where to install the built boost
+boost_build_dest: /opt/mapnik/boost
+boost_upstream_baseurl: https://boostorg.jfrog.io/artifactory/main/release/{{ boost_build_version }}/source/
+boost_upstream_archive: "boost_{{ boost_build_version_u }}.tar.bz2"
 
 # Packages for mapnik required build tools
 mapnik_build_tools: ''
 # Packages for mapnik required dependencies
 mapnik_build_deps: ''
+# where to install mapnik
+mapnik_build_dest: /opt/mapnik
+# Options to pass to cmake for mapnik compile
+mapnik_cmake_opts: "-DCMAKE_INSTALL_PREFIX={{ mapnik_build_dest }} {{ boost_source=='upstream' | ternary('-DBOOST_ROOT={{ boost_build_dest }}','')"

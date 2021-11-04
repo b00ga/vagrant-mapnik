@@ -37,6 +37,16 @@
       update_cache: yes
     when: ansible_os_family == 'Debian'
 
+  - name: Enable powertools repo
+    become: yes
+    ini_file:
+      path: /etc/yum.repos.d/CentOS-Linux-PowerTools.repo 
+      no_extra_spaces: yes
+      section: powertools
+      option: enabled
+      value: '1'
+    when: ansible_distribution == 'CentOS' and ansible_distribution_major_version >= '8'
+
   - name: Install git
     become: yes
     package:
@@ -122,10 +132,44 @@
       state: present
     when: boost_source == 'package'
 
-  - name: Install boost binary distribution
+  - name: Build and install boost from source
     block:
-      - debug:
-          msg: "TODO: Build boost"
+      - name: Download boost source archive
+        get_url:
+          url: '{{ boost_upstream_baseurl }}/{{ boost_upstream_archive }}'
+          dest: '{{ ansible_user_dir }}/{{ boost_upstream_archive }}'
+        register: boost_download
+
+      - name: Extract boost source
+        unarchive:
+          src: '{{ ansible_user_dir }}/{{ boost_upstream_archive }}'
+          remote_src: yes
+          dest: '{{ ansible_user_dir }}'
+        when: boost_download.changed
+
+      - name: Install required build tools
+        become: yes
+        package:
+          name: '{{ boost_build_deps }}'
+          state: present
+        when: boost_build_deps != ''
+
+      - name: Configure boost build
+        command: ./bootstrap.sh --prefix={{ boost_build_dest }} --with-icu --with-python={{ python_exec }}
+        args:
+          chdir: '{{ ansible_user_dir }}/boost_{{ boost_build_version_u }}'
+
+      - name: Build boost
+        command: ./b2 {{ boost_build_opts }}
+        args:
+          chdir: '{{ ansible_user_dir }}/boost_{{ boost_build_version_u }}'
+
+      - name: Install boost
+        become: yes
+        command: ./b2 {{ boost_build_opts }} install
+        args:
+          chdir: '{{ ansible_user_dir }}/boost_{{ boost_build_version_u }}'
+
     # End block
     when: boost_source == 'upstream'
 

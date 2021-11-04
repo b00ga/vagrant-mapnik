@@ -6,3 +6,4 @@ mapnik_build_deps: >
     cairo-devel,proj-devel,gdal-devel,libpq-devel,
     harfbuzz-devel,sqlite-devel,qt5-qtbase-devel
 boost_pkgs: boost-devel
+boost_build_deps: python3-devel

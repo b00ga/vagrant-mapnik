@@ -10,7 +10,8 @@ boost_pkgs_list: >
     boost-devel,libboost_filesystem-devel,libboost_system-devel,
     libboost_regex-devel,libboost_program_options-devel
 boost_pkgs: '{{ boost_pkgs_list | replace(" ","") }}'
-mapnik_build_tools: make,gcc,gcc-c++
+boost_build_deps: python3-devel
+mapnik_build_tools: bzip2,make,gcc,gcc-c++
 mapnik_build_deps_list: >
     libicu-devel,freetype2-devel,harfbuzz-devel,libxml2-devel,
     libpng16-devel,libjpeg8-devel,libtiff-devel,libwebp-devel,cairo-devel,
