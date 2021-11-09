@@ -39,8 +39,11 @@ boost_upstream_archive: "boost_{{ boost_build_version_u }}.tar.bz2"
 # Packages for mapnik required build tools
 mapnik_build_tools: ''
 # Packages for mapnik required dependencies
+freetype_dev_pkg: ''
 mapnik_build_deps: ''
 # where to install mapnik
 mapnik_build_dest: /opt/mapnik
 # Options to pass to cmake for mapnik compile
-mapnik_cmake_opts: "-DCMAKE_INSTALL_PREFIX={{ mapnik_build_dest }} {{ boost_source=='upstream' | ternary('-DBOOST_ROOT={{ boost_build_dest }}','')"
+mapnik_cmake_opts: "-DCMAKE_INSTALL_PREFIX={{ mapnik_build_dest }} {{ (boost_source=='upstream') | ternary('-DBOOST_ROOT=' + boost_build_dest,'') }}"
+# If the platform needs extra cmake options, override this var
+mapnik_cmake_platform_opts: ''

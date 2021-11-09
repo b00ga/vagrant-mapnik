@@ -1,7 +1,8 @@
 ---
 mapnik_build_tools: make,gcc,gcc-c++
+freetype_dev_pkg: freetype-devel
 mapnik_build_deps: >
-    libicu-devel,freetype-devel,libxml2-devel,
+    libicu-devel,libxml2-devel,
     libjpeg-turbo-devel,libtiff-devel,libwebp-devel,
     cairo-devel,proj-devel,gdal-devel,libpq-devel,
     harfbuzz-devel,sqlite-devel,qt5-qtbase-devel

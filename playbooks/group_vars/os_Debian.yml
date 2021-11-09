@@ -1,9 +1,10 @@
 ---
+freetype_dev_pkg: libfreetype-dev
 mapnik_build_tools: make,gcc,g++
 mapnik_build_deps: >
-    libfreetype-dev,libharfbuzz-dev,libxml2-dev,
+    libharfbuzz-dev,libxml2-dev,
     libturbojpeg0-dev,libtiff-dev,libwebp-dev,
     libcairo2-dev,libproj-dev,libgdal-dev,libpq-dev,
     qtbase5-dev
 boost_pkgs: libboost-all-dev
-cmake_opts: -DPostgreSQL_TYPE_INCLUDE_DIR=/usr/include
+mapnik_cmake_platform_opts: -DPostgreSQL_TYPE_INCLUDE_DIR=/usr/include

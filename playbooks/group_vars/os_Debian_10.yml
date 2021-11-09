@@ -2,3 +2,5 @@
 cmake_source: upstream
 cmake_cmd: /opt/cmake/bin/cmake
 boost_source: upstream
+freetype_dev_pkg: libfreetype6-dev
+boost_build_deps: python3-dev

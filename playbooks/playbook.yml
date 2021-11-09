@@ -33,9 +33,10 @@
 
   - name: Update apt package cache
     become: yes
-    apt:
+    package:
+      name: vim
       update_cache: yes
-    when: ansible_os_family == 'Debian'
+    when: ansible_os_family == 'Debian' or ansible_os_family == 'Suse'
 
   - name: Enable powertools repo
     become: yes
@@ -102,6 +103,10 @@
           src: '/opt/{{ cmake_upstream_tarball | splitext | first | splitext | first }}'
           dest: /opt/cmake
           state: link
+
+      - name: Set upstream cmake as the cmake command to use
+        set_fact:
+          cmake_cmd: /opt/cmake/bin/cmake
 
     # End block
     when: cmake_source == 'upstream'
@@ -176,11 +181,11 @@
   - name: Install required build dependencies
     become: yes
     package:
-      name: '{{ mapnik_build_deps }}'
+      name: "{{ [mapnik_build_deps,freetype_dev_pkg] | join(',') }}"
       state: present
     when: mapnik_build_deps != ''
 
   - name: Configure source with cmake
-    command: '{{ cmake_cmd }} {{ cmake_opts }} ..'
+    command: '{{ cmake_cmd }} {{ mapnik_cmake_opts }} {{ mapnik_cmake_platform_opts }} ..'
     args:
       chdir: '{{ ansible_user_dir }}/mapnik/build'
