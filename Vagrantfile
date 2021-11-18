@@ -8,6 +8,12 @@ Vagrant.configure("2") do |config|
   config.vm.define "centos8" do |machine|
     machine.vm.box = "generic/centos8"
   end
+  config.vm.define "centosstream8" do |machine|
+    machine.vm.box = "bento/centos-stream-8"
+  end
+  config.vm.define "alma8" do |machine|
+    machine.vm.box = "almalinux/8"
+  end
   config.vm.define "fedora33" do |machine|
     machine.vm.box = "bento/fedora-33"
   end

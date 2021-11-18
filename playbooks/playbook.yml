@@ -40,12 +40,7 @@
 
   - name: Enable powertools repo
     become: yes
-    ini_file:
-      path: /etc/yum.repos.d/CentOS-Linux-PowerTools.repo 
-      no_extra_spaces: yes
-      section: powertools
-      option: enabled
-      value: '1'
+    command: dnf config-manager --enable powertools
     when: ansible_distribution == 'CentOS' and ansible_distribution_major_version >= '8'
 
   - name: Install git
