@@ -128,7 +128,7 @@
     package:
       name: '{{ mapnik_build_tools }}'
       state: present
-    when: mapnik_build_tools != ''
+    when: mapnik_build_tools is defined and mapnik_build_tools
 
   - name: Install boost packages
     become: yes
@@ -157,7 +157,7 @@
         package:
           name: '{{ boost_build_deps }}'
           state: present
-        when: boost_build_deps != ''
+        when: boost_build_deps is defined and boost_build_deps
 
       - name: Configure boost build
         command: ./bootstrap.sh --prefix={{ boost_build_dest }} --with-icu --with-python={{ python_exec }}
@@ -183,7 +183,7 @@
     package:
       name: "{{ [mapnik_build_deps,freetype_dev_pkg] | join(',') }}"
       state: present
-    when: mapnik_build_deps != ''
+    when: mapnik_build_deps is defined and mapnik_build_deps
 
   - name: Configure source with cmake
     command: '{{ cmake_cmd }} {{ mapnik_cmake_opts }} {{ mapnik_cmake_platform_opts }} ..'

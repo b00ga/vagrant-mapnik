@@ -1,0 +1,3 @@
+---
+mapnik_build_tools: gtar-1.34,gmake
+boost_source: upstream

@@ -72,7 +72,7 @@ Vagrant.configure("2") do |config|
       inline: "echo 'Installing python...' && sudo pkg install -y python3"
   end
   config.vm.define "openbsd" do |machine|
-    machine.vm.box = "generic/openbsd6"
+    machine.vm.box = "generic/openbsd7"
     machine.vm.provision "ansible", type: "shell",
       preserve_order: true,
       inline: "echo 'Installing python...' && sudo pkg_add -v python-3.9.7"
