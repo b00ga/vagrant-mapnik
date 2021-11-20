@@ -15,6 +15,7 @@
   - group_by: key=os_{{ ansible_os_family }}
   - group_by: key=os_{{ ansible_distribution }}
   - group_by: key=os_{{ ansible_os_family }}_{{ ansible_distribution_major_version }}
+  - group_by: key=os_{{ ansible_os_family }}_{{ ansible_distribution_version }}
     when: ansible_distribution_major_version is defined
 
   - include: "{{ item }}"
@@ -136,7 +137,7 @@
     block:
       - name: Download boost source archive
         get_url:
-          url: '{{ boost_upstream_baseurl }}/{{ boost_upstream_archive }}'
+          url: '{{ boost_upstream_baseurl }}{{ boost_upstream_archive }}'
           dest: '{{ ansible_user_dir }}/{{ boost_upstream_archive }}'
         register: boost_download
 

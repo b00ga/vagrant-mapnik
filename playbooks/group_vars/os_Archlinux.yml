@@ -1,2 +1,5 @@
 ---
-mapnik_build_tools: make,gcc
+mapnik_build_tools: make,gcc,pkgconf
+mapnik_build_deps: |
+    freetype2,libjpeg-turbo,libpng,libtiff,libwebp,proj,cairo,
+    gdal,qt5-base
