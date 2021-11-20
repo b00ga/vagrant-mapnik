@@ -20,6 +20,9 @@ Vagrant.configure("2") do |config|
   config.vm.define "fedora34" do |machine|
     machine.vm.box = "bento/fedora-34"
   end
+  config.vm.define "fedora35" do |machine|
+    machine.vm.box = "fedora/35-cloud-base"
+  end
   config.vm.define "ubuntu1804" do |machine|
     machine.vm.box = "bento/ubuntu-18.04"
   end
