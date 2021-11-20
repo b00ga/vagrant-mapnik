@@ -1,3 +1,4 @@
 ---
 freetype_dev_pkg: libfreetype6-dev
 cmake_source: upstream
+boost_source: upstream
