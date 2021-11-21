@@ -1,0 +1,39 @@
+---
+- name: Install GNU tar
+  become: yes
+  package:
+    name: 'gtar'
+    state: present
+
+- name: Set xset file extension
+  set_fact:
+    xset_ext: "{{ (ansible_distribution_release) is version('9.0','>=') | ternary('tar.xz','tgz') }}"
+
+- name: Download additional NetBSD sets
+  get_url:
+    url: '{{ netbsd_mirror_url }}/{{ taskitem }}.{{ xset_ext }}'
+    dest: '{{ ansible_user_dir }}/{{ taskitem }}.{{ xset_ext }}'
+  with_items:
+  - xbase
+  - xfont
+  - xcomp
+  - xserver
+  - xetc
+  loop_control:
+    loop_var: taskitem
+
+- name: Extract additional NetBSD sets
+  become: yes
+  unarchive:
+    src: '{{ ansible_user_dir }}/{{ taskitem }}.{{ xset_ext }}'
+    remote_src: yes
+    dest: /
+    extra_opts: '-p'
+  with_items:
+  - xbase
+  - xfont
+  - xcomp
+  - xserver
+  - xetc
+  loop_control:
+    loop_var: taskitem

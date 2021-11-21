@@ -15,8 +15,8 @@
   - group_by: key=os_{{ ansible_os_family }}
   - group_by: key=os_{{ ansible_distribution }}
   - group_by: key=os_{{ ansible_os_family }}_{{ ansible_distribution_major_version }}
-  - group_by: key=os_{{ ansible_os_family }}_{{ ansible_distribution_version }}
     when: ansible_distribution_major_version is defined
+  - group_by: key=os_{{ ansible_os_family }}_{{ ansible_distribution_version }}
 
   - include: "{{ item }}"
     with_first_found:

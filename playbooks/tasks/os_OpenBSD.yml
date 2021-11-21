@@ -1,0 +1,37 @@
+---
+- name: Install GNU tar
+  become: yes
+  openbsd_pkg:
+    name: gtar--
+    state: present
+
+- name: Set version without dot
+  set_fact:
+    distver_nodot: "{{ ansible_distribution_version | replace('.','') }}"
+
+- name: Download X11 sets
+  get_url:
+    url: '{{ xset }}'
+    dest: '{{ ansible_user_dir }}/{{ xset | basename }}'
+  with_items:
+  - https://cdn.openbsd.org/pub/OpenBSD/{{ ansible_distribution_version }}/amd64/xbase{{ distver_nodot }}.tgz
+  - https://cdn.openbsd.org/pub/OpenBSD/{{ ansible_distribution_version }}/amd64/xfont{{ distver_nodot }}.tgz
+  - https://cdn.openbsd.org/pub/OpenBSD/{{ ansible_distribution_version }}/amd64/xserv{{ distver_nodot }}.tgz
+  - https://cdn.openbsd.org/pub/OpenBSD/{{ ansible_distribution_version }}/amd64/xshare{{ distver_nodot }}.tgz
+  loop_control:
+    loop_var: xset
+
+- name: Extract X11 sets
+  become: yes
+  unarchive:
+    src: '{{ ansible_user_dir }}/{{ xset }}'
+    remote_src: yes
+    dest: /
+    extra_opts: '-p'
+  with_items:
+  - xbase{{ distver_nodot }}.tgz
+  - xfont{{ distver_nodot }}.tgz
+  - xserv{{ distver_nodot }}.tgz
+  - xshare{{ distver_nodot }}.tgz
+  loop_control:
+    loop_var: xset

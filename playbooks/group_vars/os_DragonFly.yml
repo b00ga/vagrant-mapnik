@@ -1,6 +1,6 @@
-
 ---
+boost_pkgs: boost-all
 boost_source: upstream
-mapnik_build_tools: gtar
 freetype_dev_pkg: freetype2
+mapnik_build_tools: gtar
 mapnik_build_deps: icu,harfbuzz,libjpeg-turbo,png,tiff,webp,cairo,proj,gdal,qt5

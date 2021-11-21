@@ -90,7 +90,7 @@ Vagrant.configure("2") do |config|
     machine.vm.box = "generic/netbsd8"
     machine.vm.provision "ansible", type: "shell",
       preserve_order: true,
-      inline: "echo 'Installing python...' && sudo pkgin -y update && pkgin -y install python38 mozilla-rootcerts && if [ ! -f /usr/pkg/etc/openssl/certs/ca-certificates.crt ]; then mozilla-rootcerts install ; fi"
+      inline: "echo 'Installing python...' && sudo sed -i -e 's/2020Q3/2021Q2/' /usr/pkg/etc/pkgin/repositories.conf && sudo pkgin -y update && pkgin -y install python38 mozilla-rootcerts && if [ ! -f /usr/pkg/etc/openssl/certs/ca-certificates.crt ]; then mozilla-rootcerts install ; fi"
   end
   config.vm.define "netbsd9" do |machine|
     machine.vm.box = "generic/netbsd9"
@@ -102,7 +102,7 @@ Vagrant.configure("2") do |config|
     machine.vm.box = "generic/dragonflybsd6"
     machine.vm.provision "ansible", type: "shell",
       preserve_order: true,
-      inline: "echo 'Cleaning up...' && sudo hammer prune-everything / && echo 'PKG_ENV { SSL_NO_VERIFY_PEER=1 }' | sudo tee -a /usr/local/etc/pkg.conf && sudo pkg remove -y git-lite"
+      inline: "echo 'Cleaning up...' && sudo hammer prune-everything / && echo 'Installing python...' && echo 'PKG_ENV { SSL_NO_VERIFY_PEER=1 }' | sudo tee -a /usr/local/etc/pkg.conf && sudo pkg update && sudo pkg install -y python"
   end
   config.vm.define "openindiana" do |machine|
     machine.vm.box = "openindiana/hipster"
