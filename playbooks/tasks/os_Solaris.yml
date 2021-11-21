@@ -1,0 +1,29 @@
+---
+- name: Install GNU tar
+  package:
+    name: /archiver/gnu-tar
+    state: present
+
+# From https://pkgsrc.joyent.com/install-on-illumos/
+- name: Set Joyent pkgsrc variables
+  set_fact:
+    pkgsrc_bootstrap_tar: bootstrap-trunk-x86_64-20201019.tar.gz
+    pkgsrc_bootstrap_sum: 127d6a561d6ae4ce07cdb87e3dd185b837f6cc18
+
+- name: Fetch Joyent pkgsrc archive
+  get_url:
+    url: 'https://pkgsrc.joyent.com/packages/SmartOS/bootstrap/{{ pkgsrc_bootstrap_tar }}'
+    dest: '{{ ansible_user_dir }}/{{ pkgsrc_bootstrap_tar }}'
+    checksum: 'sha1:{{ pkgsrc_bootstrap_sum }}'
+
+- name: Extract pkgsrc archive
+  become: yes
+  unarchive:
+    src: '{{ ansible_user_dir }}/{{ pkgsrc_bootstrap_tar }}'
+    remote_src: yes
+    dest: /
+
+- name: Update pkgin database
+  become: yes
+  pkgin:
+    update_cache: yes

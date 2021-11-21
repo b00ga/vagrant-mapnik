@@ -131,6 +131,7 @@
     package:
       name: '{{ boost_pkgs }}'
       state: present
+      use: "{{ 'pkgin' if (ansible_os_family=='Solaris') else 'auto' }}"
     when: boost_source == 'package'
 
   - name: Build and install boost from source
@@ -153,6 +154,7 @@
         package:
           name: '{{ boost_build_deps }}'
           state: present
+          use: "{{ 'pkgin' if (ansible_os_family=='Solaris') else 'auto' }}"
         when: boost_build_deps is defined and boost_build_deps
 
       - name: Configure boost build
@@ -179,6 +181,7 @@
     package:
       name: "{{ [mapnik_build_deps,freetype_dev_pkg] | join(',') }}"
       state: present
+      use: "{{ 'pkgin' if (ansible_os_family=='Solaris') else 'auto' }}"
     when: mapnik_build_deps is defined and mapnik_build_deps
 
   - name: Configure source with cmake

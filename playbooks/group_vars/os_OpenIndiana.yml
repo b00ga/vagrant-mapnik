@@ -1,2 +1,2 @@
 ---
-mapnik_build_tools: build-essential
+mapnik_build_tools: build-essential,/developer/build/pkg-config

@@ -1,0 +1,4 @@
+---
+freetype_dev_pkg: freetype2
+mapnik_build_deps: icu,harfbuzz,libjpeg-turbo,tiff,libwebp,xorgproto,cairo,proj
+mapnik_cmake_platform_opts: -DCMAKE_PREFIX_PATH=/opt/local

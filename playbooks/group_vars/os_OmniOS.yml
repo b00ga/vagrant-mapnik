@@ -1,2 +1,2 @@
 ---
-mapnik_build_tools: pkg:/developer/illumos-tools
+mapnik_build_tools: pkg:/developer/illumos-tools,/developer/pkg-config
