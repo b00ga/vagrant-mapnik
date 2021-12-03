@@ -32,7 +32,13 @@
       create: yes
       mode: '0644'
 
-  - name: Update apt package cache
+  - name: Install EPEL repo on EL distros
+    become: yes
+    import_role:
+      name: geerlingguy.repo-epel
+    when: ansible_os_family == 'RedHat' and ansible_distribution != 'Fedora' 
+
+  - name: Update package cache
     become: yes
     package:
       name: vim
