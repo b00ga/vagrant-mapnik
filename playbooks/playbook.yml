@@ -44,11 +44,22 @@
     command: dnf config-manager --enable powertools
     when: ansible_distribution in ['CentOS','AlmaLinux'] and ansible_distribution_major_version >= '8'
 
+  - name: Disable PostgreSQL AppStream
+    become: yes
+    command: dnf module disable -y postgresql
+    when: ansible_distribution in ['CentOS','AlmaLinux'] and ansible_distribution_major_version >= '8'
+
   - name: Install EPEL repo on EL distros
     become: yes
     import_role:
       name: geerlingguy.repo-epel
     when: ansible_os_family == 'RedHat' and ansible_distribution != 'Fedora'
+
+  - name: Install PGDG repo
+    become: yes
+    import_role:
+      name: b00ga.repo_pgdg
+    when: pgdg_install_repo | bool
 
   - name: Install git
     become: yes
@@ -182,6 +193,14 @@
     # End block
     when: boost_source == 'upstream'
 
+  - name: Install proj from package
+    become: yes
+    package:
+      name: "{{ proj_dev_pkg }}"
+      state: present
+      use: "{{ 'pkgin' if (ansible_os_family=='Solaris') else 'auto' }}"
+    when: proj_source == 'package'
+
   - name: Install required build dependencies
     become: yes
     package:
@@ -194,3 +213,5 @@
     command: '{{ cmake_cmd }} {{ mapnik_cmake_opts }} {{ mapnik_cmake_platform_opts }} ..'
     args:
       chdir: '{{ ansible_user_dir }}/mapnik/build'
+    environment:
+      PKG_CONFIG_PATH: "{{ mapnik_pkgconf_dirs }}"

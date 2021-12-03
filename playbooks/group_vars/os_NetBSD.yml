@@ -2,4 +2,4 @@
 netbsd_mirror_url: http://mirrors.mit.edu/NetBSD/NetBSD-{{ ansible_distribution_release }}/amd64/binary/sets/
 freetype_dev_pkg: freetype2
 mapnik_build_tools: pkgconf
-mapnik_build_deps: harfbuzz,png,tiff,libwebp,proj,gdal-lib,postgresql13,cairo,qt5-qtbase,proj,gdal-lib
+mapnik_build_deps: harfbuzz,png,tiff,libwebp,gdal-lib,postgresql13,cairo,qt5-qtbase

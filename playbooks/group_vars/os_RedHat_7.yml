@@ -2,3 +2,8 @@
 cmake_pkg: cmake3
 cmake_cmd: cmake3
 boost_source: upstream
+pgdg_install_repo: yes
+proj_dev_pkg: proj81-devel
+mapnik_pkgconf_dirs: /usr/proj81/lib/pkgconfig
+mapnik_build_tools: make,gcc,gcc-c++,centos-release-scl,postgresql13-devel
+mapnik_cmake_platform_opts: -DPostgreSQL_INCLUDE_DIR=/usr/pgsql-13/include -DPostgreSQL_TYPE_INCLUDE_DIR=/usr/pgsql-13/include

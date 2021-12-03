@@ -1,6 +1,7 @@
 ---
 boost_build_deps: linux-headers,python3-dev
+proj_dev_pkg: proj-dev
 mapnik_build_tools: build-base,tar
 mapnik_build_deps: |
     icu-dev,boost-dev,freetype-dev,libjpeg-turbo-dev,libpng-dev,tiff-dev,
-    libwebp-dev,harfbuzz-dev,cairo-dev,libxml2-dev,proj-dev,gdal-dev
+    libwebp-dev,harfbuzz-dev,cairo-dev,libxml2-dev,gdal-dev

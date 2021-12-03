@@ -7,6 +7,10 @@
 # Used when building boost (if needed) and mapnik-python
 python_exec: /usr/bin/python3
 
+# Install the PostreSQL Community (PGDG) repository
+# Availbe on RedHat, Debian, and SUSE-based distros
+pgdg_install_repo: no
+
 cmake_pkg: cmake
 cmake_cmd: cmake
 # Recognized values for cmake_source are:
@@ -36,6 +40,14 @@ boost_build_dest: /opt/mapnik/boost
 boost_upstream_baseurl: https://boostorg.jfrog.io/artifactory/main/release/{{ boost_build_version }}/source/
 boost_upstream_archive: "boost_{{ boost_build_version_u }}.tar.bz2"
 
+proj_dev_pkg: proj
+# Recognized values for proj_source are:
+# * package: Use package manager to install proj
+# * upstream: Build upstream proj libraries needed by mapnik
+# Default is 'package'
+proj_source: package
+
+
 # Packages for mapnik required build tools
 mapnik_build_tools: ''
 # Packages for mapnik required dependencies
@@ -47,3 +59,5 @@ mapnik_build_dest: /opt/mapnik
 mapnik_cmake_opts: "-DCMAKE_INSTALL_PREFIX={{ mapnik_build_dest }} {{ (boost_source=='upstream') | ternary('-DBOOST_ROOT=' + boost_build_dest,'') }}"
 # If the platform needs extra cmake options, override this var
 mapnik_cmake_platform_opts: ''
+# Need pkg-config checks to look for .pc files in other directories?
+mapnik_pkgconf_dirs: ''

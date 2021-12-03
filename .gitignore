@@ -1,3 +1,7 @@
 .vagrant
 *.swp
 *.csv
+playbooks/roles/**/*
+!playbooks/roles/requirements.yml
+!playbooks/roles/b00ga.repo_pgdg/
+!playbooks/roles/b00ga.repo_pgdg/**/*

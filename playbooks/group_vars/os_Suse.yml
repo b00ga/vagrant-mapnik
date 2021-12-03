@@ -11,10 +11,11 @@ boost_pkgs_list: >
     libboost_regex-devel,libboost_program_options-devel
 boost_pkgs: '{{ boost_pkgs_list | replace(" ","") }}'
 boost_build_deps: python3-devel
+proj_dev_pkg: proj-devel
 mapnik_build_tools: bzip2,make,gcc,gcc-c++
 mapnik_build_deps_list: >
     libicu-devel,freetype2-devel,harfbuzz-devel,libxml2-devel,
     libpng16-devel,libjpeg8-devel,libtiff-devel,libwebp-devel,cairo-devel,
-    proj-devel,gdal-devel,postgresql13-server-devel,sqlite3-devel,
+    gdal-devel,postgresql13-server-devel,sqlite3-devel,
     libqt5-qtbase-devel
 mapnik_build_deps: '{{ mapnik_build_deps_list | replace(" ","") }}'
