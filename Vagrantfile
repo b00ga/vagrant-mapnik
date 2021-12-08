@@ -14,9 +14,6 @@ Vagrant.configure("2") do |config|
   config.vm.define "alma8" do |machine|
     machine.vm.box = "almalinux/8"
   end
-  config.vm.define "fedora33" do |machine|
-    machine.vm.box = "bento/fedora-33"
-  end
   config.vm.define "fedora34" do |machine|
     machine.vm.box = "bento/fedora-34"
   end
