@@ -1,4 +1,6 @@
 ---
+pgdg_install_repo: yes
 freetype_dev_pkg: libfreetype6-dev
 cmake_source: upstream
 boost_source: upstream
+boost_build_deps: python3-dev

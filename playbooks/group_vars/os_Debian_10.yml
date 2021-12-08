@@ -1,4 +1,5 @@
 ---
+pgdg_install_repo: yes
 cmake_source: upstream
 cmake_cmd: /opt/cmake/bin/cmake
 boost_source: upstream

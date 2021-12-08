@@ -1,3 +1,4 @@
 ---
+pgdg_install_repo: yes
 boost_source: upstream
 boost_build_deps: python3-dev

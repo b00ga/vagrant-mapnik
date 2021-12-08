@@ -1,2 +1,3 @@
 ---
+pgdg_install_repo: yes
 boost_source: upstream

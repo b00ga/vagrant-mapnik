@@ -1,7 +1,7 @@
 ---
-- name: Import PGDG repoo key
+- name: Import PGDG repo key
   rpm_key:
-    key: "{{ pgdg_repo_key_url }}"
+    key: "{{ pgdg_yum_repokey_url }}"
     state: present
   register: result
   until: result is succeeded
@@ -10,7 +10,7 @@
 
 - name: Install PGDG repo package
   yum:
-    name: "{{ pgdg_repo_url }}"
+    name: "{{ pgdg_yum_repo_url }}"
     state: present
   register: result
   until: result is succeeded

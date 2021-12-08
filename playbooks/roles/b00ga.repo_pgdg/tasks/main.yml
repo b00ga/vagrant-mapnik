@@ -1,11 +1,11 @@
 ---
 
-- include_tasks: RedHat.yml
+- include_tasks: redhat.yml
   when: ansible_os_family == 'RedHat'
 
 - include_tasks: debian.yml
   when: ansible_os_family == 'Debian' 
 
 - include_tasks: suse.yml
-  when: ansible_os_family == 'SuSE' 
+  when: ansible_os_family == 'Suse' 
 

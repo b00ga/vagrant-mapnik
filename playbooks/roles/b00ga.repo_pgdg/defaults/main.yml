@@ -1,3 +1,6 @@
 ---
-pgdg_repo_url: "https://download.postgresql.org/pub/repos/yum/reporpms/EL-{{ ansible_distribution_major_version }}-x86_64/pgdg-redhat-repo-latest.noarch.rpm"
-pgdg_repo_key_url: "https://download.postgresql.org/pub/repos/yum/RPM-GPG-KEY-PGDG"
+pgdg_yum_repo_url: "https://download.postgresql.org/pub/repos/yum/reporpms/EL-{{ ansible_distribution_major_version }}-x86_64/pgdg-redhat-repo-latest.noarch.rpm"
+pgdg_yum_repokey_url: "https://download.postgresql.org/pub/repos/yum/RPM-GPG-KEY-PGDG"
+pgdg_apt_repo_url: "http://apt.postgresql.org/pub/repos/apt"
+pgdg_apt_repokey_url: "https://www.postgresql.org/media/keys/ACCC4CF8.asc"
+pgdg_zypp_repo_url: "https://download.postgresql.org/pub/repos/zypp/repo/pgdg-sles-{{ ansible_distribution_major_version }}-pg13.repo"

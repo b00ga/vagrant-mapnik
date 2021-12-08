@@ -1,0 +1,13 @@
+---
+- name: Install PGDG repo
+  zypper_repository:
+    repo: "{{ pgdg_zypp_repo_url }}"
+    state: present
+    runrefresh: no
+
+- name: Refresh zypper metadata
+  zypper_repository:
+    name: pgdg-13
+    repo: '*'
+    auto_import_keys: yes
+    runrefresh: yes
