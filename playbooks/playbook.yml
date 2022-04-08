@@ -39,6 +39,13 @@
       update_cache: yes
     when: ansible_os_family == 'Debian' or ansible_os_family == 'Suse'
 
+  - name: Enable software collections
+    become: yes
+    package:
+      name: centos-release-scl
+      state: installed
+    when: ansible_distribution == 'CentOS' and ansible_distribution_major_version == '7'
+
   - name: Enable powertools repo
     become: yes
     command: dnf config-manager --enable powertools
