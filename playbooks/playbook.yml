@@ -71,6 +71,7 @@
     git:
       repo: https://github.com/mapnik/mapnik.git
       dest: '{{ ansible_user_dir }}/mapnik'
+      depth: 1
       version: master
 
   - name: Create cmake build directory
