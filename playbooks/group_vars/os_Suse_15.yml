@@ -1,3 +1,5 @@
 ---
 pgdg_install_repo: yes
+proj_dev_pkg: proj81-devel
+mapnik_pkgconf_dirs: /usr/proj81/lib/pkgconfig
 boost_source: upstream

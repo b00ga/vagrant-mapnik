@@ -26,8 +26,8 @@ Vagrant.configure("2") do |config|
   config.vm.define "ubuntu2004" do |machine|
     machine.vm.box = "bento/ubuntu-20.04"
   end
-  config.vm.define "ubuntu2110" do |machine|
-    machine.vm.box = "ubuntu/impish64"
+  config.vm.define "ubuntu2204" do |machine|
+    machine.vm.box = "ubuntu/jammy64"
   end
   config.vm.define "debian10" do |machine|
     machine.vm.box = "bento/debian-10"
@@ -81,7 +81,7 @@ Vagrant.configure("2") do |config|
     machine.vm.box = "generic/openbsd7"
     machine.vm.provision "ansible", type: "shell",
       preserve_order: true,
-      inline: "echo 'Installing python...' && sudo pkg_add -v python-3.9.7"
+      inline: "echo 'Installing python...' && sudo pkg_add -v python3"
   end
   config.vm.define "netbsd8" do |machine|
     machine.vm.box = "generic/netbsd8"
@@ -111,14 +111,19 @@ Vagrant.configure("2") do |config|
     machine.ssh.password = 'admin'
   end
 
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 4096
+    v.cpus = 4
+  end
+
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "playbooks/playbook.yml"
     ansible.compatibility_mode = "2.0"
-    ansible.verbose = '-vvv'
+    ansible.verbose = '-vv'
     ansible.host_vars = {
       "freebsd12" => { "ansible_python_interpreter" => "/usr/local/bin/python3" },
       "freebsd13" => { "ansible_python_interpreter" => "/usr/local/bin/python3" },
-      "openbsd" => { "ansible_python_interpreter" => "/usr/local/bin/python3.9" },
+      "openbsd" => { "ansible_python_interpreter" => "/usr/local/bin/python3" },
       "netbsd8" => { "ansible_python_interpreter" => "/usr/pkg/bin/python3.8" },
       "netbsd9" => { "ansible_python_interpreter" => "/usr/pkg/bin/python3.8" }
     }

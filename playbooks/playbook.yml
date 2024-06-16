@@ -16,9 +16,9 @@
   - group_by: key=os_{{ ansible_distribution }}
   - group_by: key=os_{{ ansible_os_family }}_{{ ansible_distribution_major_version }}
     when: ansible_distribution_major_version is defined
-  - group_by: key=os_{{ ansible_os_family }}_{{ ansible_distribution_version }}
+  - group_by: key=os_{{ ansible_os_family }}_{{ ansible_distribution_version | regex_replace('\.','_') }}
 
-  - include: "{{ item }}"
+  - include_tasks: "{{ item }}"
     with_first_found:
       - files:
           - tasks/os_{{ ansible_os_family }}.yml
